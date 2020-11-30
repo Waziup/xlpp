@@ -72,6 +72,8 @@ func TestSimple(t *testing.T) {
 		w.Add(channel, value)
 	}
 
+	log.Printf("buffer size: %d", buf.Len())
+
 	r := xlpp.NewReader(&buf)
 	for {
 		channel, value, err := r.Next()

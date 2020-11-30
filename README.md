@@ -65,7 +65,10 @@ func main() {
 	for i, value := range values {
 		var channel = uint8(i)
 		w.Add(channel, value)
-	}
+    }
+    
+    log.Printf("buffer size: %d B", buf.Len())
+    // > buffer size 130 B
 
 	// read types using xlpp.Reader
 	r := xlpp.NewReader(&buf)
