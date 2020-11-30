@@ -35,12 +35,12 @@ var str = xlpp.String("test :)")
 var boolean = xlpp.Bool(true)
 var bin = xlpp.Binary([]byte{1, 2, 3, 7, 8, 9})
 var object = xlpp.Object{
-    "count": &integer,
+	"count": &integer,
 	"pos":   &gps,
 	"val":   &digitalInput,
 }
 var array = xlpp.Array{
-    &presence,
+	&presence,
 	&luminosity,
 	&temperature,
 }
@@ -49,9 +49,9 @@ var null = xlpp.Null{}
 
 var values = []xlpp.Value{
 	// LPP types
-    &digitalInput, &digitalOutput, &analogInput, &analogOutput,
-    &luminosity, &presence, &temperature, &relativeHumidity,
-    &accelerometer, &barometricPressure, &gyromter, &gps,
+	&digitalInput, &digitalOutput, &analogInput, &analogOutput,
+	&luminosity, &presence, &temperature, &relativeHumidity,
+	&accelerometer, &barometricPressure, &gyromter, &gps,
 	// XLPP types
 	&integer, &str, &boolean, &bin, &object, &array, &null,
 }
@@ -60,14 +60,14 @@ var values = []xlpp.Value{
 func main() {
 	var buf bytes.Buffer
 
-    // write types using xlpp.Writer
+	// write types using xlpp.Writer
 	w := xlpp.NewWriter(&buf)
 	for i, value := range values {
 		var channel = uint8(i)
 		w.Add(channel, value)
 	}
 
-    // read types using xlpp.Reader
+	// read types using xlpp.Reader
 	r := xlpp.NewReader(&buf)
 	for {
 		channel, value, err := r.Next()
