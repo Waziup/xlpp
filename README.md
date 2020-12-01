@@ -122,20 +122,36 @@ Array | len(values)+1 | list of values
 Install the xlpp binary from source using the [go programming language](https://golang.org/dl/):
 
 ```cmd
-> go install github.com/waziup/xlpp/cmd/xlpp
+go install github.com/waziup/xlpp/cmd/xlpp
 ```
 
 Usage:
 
-```
-Encoding:
-> xlpp ./xlpp -e '{"temperature0":23.5}'
-< AGcA6w==
+```bash
+# Encoding: JSON -> XLPP Base64:
+xlpp ./xlpp -e '{"temperature0":23.5}'
+# AGcA6w==
 
-Decoding:
-> xlpp ./xlpp -d AGcA6w==
-< {"temperature0":23.5}
+# Decoding: XLPP Base64 -> JSON
+xlpp ./xlpp -d AGcA6w==
+# {"temperature0":23.5}
+
+# Encoding Binary
+xlpp -e -f bin '{"string1":"hello:)"}' > pl1.xlpp
+xlpp -e -f bin '{"temperature0":23.5}' > pl1.xlpp
+# Decoding Binary
+xlpp -d -f bin < pl1.xlpp
+# {"string1":"hello:)","temperature0":23.5}
 ```
+
+Commandline flags:
+
+Flag | Help
+-- | --
+-d | decode from XLPP
+-e | encode to XLPP
+-f | format: `base64` (default) or `bin`
+
 
 # References
 
