@@ -117,6 +117,25 @@ String | len(string)+1 | null terminated C string
 Object | len(keys)+values+1 | keys are null terminated C strings, followed by the values
 Array | len(values)+1 | list of values
 
+# XLPP Binary
+
+Install the xlpp binary from source using the [go programming language](https://golang.org/dl/):
+
+```cmd
+> go install github.com/waziup/xlpp/cmd/xlpp
+```
+
+Usage:
+
+```
+Encoding:
+> xlpp ./xlpp -e '{"temperature0":23.5}'
+< AGcA6w==
+
+Decoding:
+> xlpp ./xlpp -d AGcA6w==
+< {"temperature0":23.5}
+```
 
 # References
 
