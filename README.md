@@ -129,11 +129,11 @@ Usage:
 
 ```bash
 # Encoding: JSON -> XLPP Base64:
-xlpp ./xlpp -e '{"temperature0":23.5}'
+xlpp -e '{"temperature0":23.5}'
 # AGcA6w==
 
 # Decoding: XLPP Base64 -> JSON
-xlpp ./xlpp -d AGcA6w==
+xlpp -d AGcA6w==
 # {"temperature0":23.5}
 
 # Encoding Binary
