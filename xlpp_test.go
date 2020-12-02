@@ -81,7 +81,7 @@ func TestSimple(t *testing.T) {
 			log.Fatal("reading error:", err)
 		}
 		if value == nil {
-			log.Fatal("end")
+			log.Print("end")
 			break
 		}
 		log.Printf("%2d: %v", channel, value)

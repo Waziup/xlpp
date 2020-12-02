@@ -110,12 +110,13 @@ GPS Location | 3336 | 136 | 88 | 9 | Latitude : 0.0001 ° Signed MSB Longitude :
 
 Type | XLPP | Data Size | Data Resolution per bit
 -- | -- | -- | --
-Null | 52 | 0 | (no value)
-Bool | 53 | 1 | true of false
 Integer | 51 | variant | 1
-String | len(string)+1 | null terminated C string
-Object | len(keys)+values+1 | keys are null terminated C strings, followed by the values
-Array | len(values)+1 | list of values
+String | 52 | len(string)+1 | null terminated C string
+Object | 123 | len(keys)+values+1 | keys are null terminated C strings, followed by the values
+Array | 91 | len(values)+1 | list of values
+Bool | 54 (true), 55 (false) | 0 | true of false
+Null | 58 | 0 | (no value)
+Binary | 57 | len+1 | raw binary data
 
 # XLPP Binary
 

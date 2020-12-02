@@ -15,10 +15,15 @@ var Registry = map[Type]func() Value{
 	TypeGyrometer:          func() Value { return new(Gyrometer) },
 	TypeGPS:                func() Value { return new(GPS) },
 	// XLPP Types
-	TypeInteger:    func() Value { return new(Integer) },
-	TypeNull:       func() Value { return new(Null) },
-	TypeString:     func() Value { return new(String) },
-	TypeBool:       func() Value { return new(Bool) },
+	TypeInteger: func() Value { return new(Integer) },
+	TypeNull:    func() Value { return new(Null) },
+	TypeString:  func() Value { return new(String) },
+	TypeBoolTrue: func() Value {
+		b := new(Bool)
+		*b = true
+		return b
+	},
+	TypeBoolFalse:  func() Value { return new(Bool) },
 	TypeObject:     func() Value { return new(Object) },
 	TypeArray:      func() Value { return new(Array) },
 	TypeEndOfArray: func() Value { return endOfArray{} },

@@ -13,14 +13,16 @@ const (
 	TypeInteger     Type = 51
 	TypeString      Type = 52
 	TypeBool        Type = 53
+	TypeBoolTrue    Type = 54
+	TypeBoolFalse   Type = 55
 	TypeObject      Type = 123 // '{'
 	TypeEndOfObject Type = 125 // '}'
 	TypeArray       Type = 91  // '['
 	TypeArrayOf     Type = 92  // '['
 	TypeEndOfArray  Type = 93  // '['
-	TypeFlags       Type = 54
-	TypeBinary      Type = 55
-	TypeNull        Type = 56
+	TypeFlags       Type = 56
+	TypeBinary      Type = 57
+	TypeNull        Type = 58
 )
 
 // Null is a empty type. It holds no data.
@@ -91,28 +93,20 @@ type Bool bool
 
 // XLPPType for Bool returns TypeBool.
 func (v Bool) XLPPType() Type {
-	return TypeBool
+	if v {
+		return TypeBoolTrue
+	}
+	return TypeBoolFalse
 }
 
 // ReadFrom reads the Bool from the writer.
 func (v *Bool) ReadFrom(r io.Reader) (n int64, err error) {
-	var brc byteReaderCounter
-	brc.ByteReader = newByteReader(r)
-	b, err := brc.ReadByte()
-	*v = b == 1
-	return int64(brc.Count), err
+	return 0, nil
 }
 
 // WriteTo writes the Bool to the writer.
 func (v Bool) WriteTo(w io.Writer) (n int64, err error) {
-	var m int
-	if v {
-		m, err = w.Write([]byte{1})
-	} else {
-		m, err = w.Write([]byte{0})
-	}
-	n += int64(m)
-	return
+	return 0, nil
 }
 
 ////////////////////////////////////////////////////////////////////////////////
