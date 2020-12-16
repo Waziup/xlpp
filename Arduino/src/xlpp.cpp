@@ -75,7 +75,7 @@ void XLPP::reset(void)
 
 uint8_t XLPP::getSize(void)
 {
-    return size;
+    return o;
 }
 
 uint8_t *XLPP::getBuffer(void)
