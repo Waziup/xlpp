@@ -1,7 +1,7 @@
 # xlpp
 Waziup Extended Low Power Payload (XLPP)
 
-[![Documentation](https://godoc.org/github.com/waziup/xlpp?status.svg)](http://godoc.org/github.com/waziup/xlpp)
+[![Documentation](https://godoc.org/github.com/Waziup/xlpp?status.svg)](http://godoc.org/github.com/Waziup/xlpp)
 
 ## Example
 
@@ -105,6 +105,21 @@ Barometer | 3315 | 115 | 73 | 2 | 0.1 hPa Unsigned MSB
 Gyrometer | 3334 | 134 | 86 | 6 | 0.01 °/s Signed MSB per axis
 GPS Location | 3336 | 136 | 88 | 9 | Latitude : 0.0001 ° Signed MSB Longitude : 0.0001 ° Signed MSB Altitude : 0.01 meter Signed MSB
 
+Type | LPP | Data Size | Data Resolution per bit
+-- | -- | -- | --
+Voltage | 116 | 2 | 0.01V Unsigned
+Current | 117 | 2 | 0.001A Unsigned
+Frequency | 118 | 4 | 1Hz Unsigned
+Percentage | 120 | 1 | 1-100% Unsigned
+Altitude | 121 | 2 | 1m Signed
+Concentration | 125 | 2 | 1 ppm Unsigned
+Power | 128 | 2 | 1W Unsigned
+Distance | 130 | 4 | 0.001m Unsigned
+Energy | 131 | 4 | 0.001kWh Unsigned
+Direction | 132 | 2 | 1deg Unsigned
+UnixTime | 133 | 4 | Unsigned
+Colour | 135 | 1 | RGB Color
+Switch | 142 | 1 | 0/1 (OFF/ON)
 
 # XLPP
 
@@ -120,13 +135,13 @@ Binary | 57 | len+1 | raw binary data
 
 # XLPP Binary
 
-Install the xlpp binary from source using the [go programming language](https://golang.org/dl/):
+Install the xlpp binary from source using the [go programming language](https://golang.org/dl/) or [download a prebuild binary file](https://github.com/Waziup/xlpp/tree/main/bin).
 
 ```cmd
 go install github.com/waziup/xlpp/cmd/xlpp
 ```
 
-Usage:
+## Usage:
 
 ```bash
 # Encoding: JSON -> XLPP Base64:
@@ -145,13 +160,23 @@ xlpp -d -f bin < pl1.xlpp
 # {"string1":"hello:)","temperature0":23.5}
 ```
 
-Commandline flags:
+## Commandline flags:
 
 Flag | Help
 -- | --
 -d | decode from XLPP
 -e | encode to XLPP
 -f | format: `base64` (default) or `bin`
+
+
+## Windows:
+
+Keep in mind Windows CMD and Windows Powershell might need `"` double quotes escaped like this:
+
+```bat
+xlpp -e "{"""colour0""":"""#ffaa00"""}"
+xlpp -e "{"""analogoutput0""":1,"""switch1""":true}"
+```
 
 
 # References
