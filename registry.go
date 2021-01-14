@@ -14,6 +14,22 @@ var Registry = map[Type]func() Value{
 	TypeBarometricPressure: func() Value { return new(BarometricPressure) },
 	TypeGyrometer:          func() Value { return new(Gyrometer) },
 	TypeGPS:                func() Value { return new(GPS) },
+
+	// more LPP Types
+	TypeVoltage:       func() Value { return new(Voltage) },
+	TypeCurrent:       func() Value { return new(Current) },
+	TypeFrequency:     func() Value { return new(Frequency) },
+	TypePercentage:    func() Value { return new(Percentage) },
+	TypeAltitude:      func() Value { return new(Altitude) },
+	TypeConcentration: func() Value { return new(Concentration) },
+	TypePower:         func() Value { return new(Power) },
+	TypeDistance:      func() Value { return new(Distance) },
+	TypeEnergy:        func() Value { return new(Energy) },
+	TypeDirection:     func() Value { return new(Direction) },
+	TypeUnixTime:      func() Value { return new(UnixTime) },
+	TypeColour:        func() Value { return new(Colour) },
+	TypeSwitch:        func() Value { return new(Switch) },
+
 	// XLPP Types
 	TypeInteger: func() Value { return new(Integer) },
 	TypeNull:    func() Value { return new(Null) },

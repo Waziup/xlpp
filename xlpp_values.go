@@ -16,13 +16,13 @@ const (
 	TypeBoolTrue    Type = 54
 	TypeBoolFalse   Type = 55
 	TypeObject      Type = 123 // '{'
-	TypeEndOfObject Type = 125 // '}'
+	TypeEndOfObject Type = 0   // '}'
 	TypeArray       Type = 91  // '['
-	TypeArrayOf     Type = 92  // '['
-	TypeEndOfArray  Type = 93  // '['
-	TypeFlags       Type = 56
-	TypeBinary      Type = 57
-	TypeNull        Type = 58
+	// TypeArrayOf     Type = 92  // '['
+	TypeEndOfArray Type = 93 // '['
+	TypeFlags      Type = 56
+	TypeBinary     Type = 57
+	TypeNull       Type = 58
 )
 
 // Null is a empty type. It holds no data.
@@ -33,7 +33,7 @@ func (v Null) XLPPType() Type {
 	return TypeNull
 }
 
-// ReadFrom reads the Null from the writer.
+// ReadFrom reads the Null from the reader.
 func (v *Null) ReadFrom(r io.Reader) (n int64, err error) {
 	return 0, nil
 }
@@ -57,7 +57,7 @@ func (v Binary) String() string {
 	return fmt.Sprintf("%X", []byte(v))
 }
 
-// ReadFrom reads the Binary from the writer.
+// ReadFrom reads the Binary from the reader.
 func (v *Binary) ReadFrom(r io.Reader) (n int64, err error) {
 	var brc byteReaderCounter
 	brc.ByteReader = newByteReader(r)
@@ -99,7 +99,7 @@ func (v Bool) XLPPType() Type {
 	return TypeBoolFalse
 }
 
-// ReadFrom reads the Bool from the writer.
+// ReadFrom reads the Bool from the reader.
 func (v *Bool) ReadFrom(r io.Reader) (n int64, err error) {
 	return 0, nil
 }
@@ -119,7 +119,7 @@ func (v Integer) XLPPType() Type {
 	return TypeInteger
 }
 
-// ReadFrom reads the Integer from the writer.
+// ReadFrom reads the Integer from the reader.
 func (v *Integer) ReadFrom(r io.Reader) (n int64, err error) {
 	var brc byteReaderCounter
 	brc.ByteReader = newByteReader(r)
@@ -147,7 +147,7 @@ func (v String) XLPPType() Type {
 	return TypeString
 }
 
-// ReadFrom reads the String from the writer.
+// ReadFrom reads the String from the reader.
 func (v *String) ReadFrom(r io.Reader) (n int64, err error) {
 	buf := make([]byte, 0, 32)
 	var brc byteReaderCounter
@@ -240,7 +240,7 @@ func (v Object) keys() []string {
 // 	return
 // }
 
-// ReadFrom reads the Object from the writer.
+// ReadFrom reads the Object from the reader.
 func (v *Object) ReadFrom(r io.Reader) (n int64, err error) {
 	*v = make(Object)
 
@@ -342,7 +342,7 @@ func (v Array) XLPPType() Type {
 // 	return
 // }
 
-// ReadFrom reads the Array from the writer.
+// ReadFrom reads the Array from the reader.
 func (v *Array) ReadFrom(r io.Reader) (n int64, err error) {
 	*v = make(Array, 0, 8)
 	for {

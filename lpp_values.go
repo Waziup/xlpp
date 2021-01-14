@@ -32,7 +32,7 @@ func (v DigitalInput) XLPPType() Type {
 	return TypeDigitalInput
 }
 
-// ReadFrom reads the DigitalInput from the writer.
+// ReadFrom reads the DigitalInput from the reader.
 func (v *DigitalInput) ReadFrom(r io.Reader) (n int64, err error) {
 	var b [1]byte
 	n, err = readFrom(r, b[:])
@@ -56,7 +56,7 @@ func (v DigitalOutput) XLPPType() Type {
 	return TypeDigitalOutput
 }
 
-// ReadFrom reads the DigitalOutput from the writer.
+// ReadFrom reads the DigitalOutput from the reader.
 func (v *DigitalOutput) ReadFrom(r io.Reader) (n int64, err error) {
 	var b [1]byte
 	n, err = readFrom(r, b[:])
@@ -84,7 +84,7 @@ func (v AnalogInput) String() string {
 	return fmt.Sprintf("%.2f", v)
 }
 
-// ReadFrom reads the AnalogInput from the writer.
+// ReadFrom reads the AnalogInput from the reader.
 func (v *AnalogInput) ReadFrom(r io.Reader) (n int64, err error) {
 	var b [2]byte
 	n, err = readFrom(r, b[:])
@@ -114,7 +114,7 @@ func (v AnalogOutput) String() string {
 	return fmt.Sprintf("%.2f", v)
 }
 
-// ReadFrom reads the AnalogOutput from the writer.
+// ReadFrom reads the AnalogOutput from the reader.
 func (v *AnalogOutput) ReadFrom(r io.Reader) (n int64, err error) {
 	var b [2]byte
 	n, err = readFrom(r, b[:])
@@ -144,7 +144,7 @@ func (v Luminosity) String() string {
 	return fmt.Sprintf("%d lux", v)
 }
 
-// ReadFrom reads the Luminosity from the writer.
+// ReadFrom reads the Luminosity from the reader.
 func (v *Luminosity) ReadFrom(r io.Reader) (n int64, err error) {
 	var b [2]byte
 	n, err = readFrom(r, b[:])
@@ -168,7 +168,7 @@ func (v Presence) XLPPType() Type {
 	return TypePresence
 }
 
-// ReadFrom reads the Presence from the writer.
+// ReadFrom reads the Presence from the reader.
 func (v *Presence) ReadFrom(r io.Reader) (n int64, err error) {
 	var b [1]byte
 	n, err = readFrom(r, b[:])
@@ -197,7 +197,7 @@ func (v Temperature) String() string {
 	return fmt.Sprintf("%.2f °C", v)
 }
 
-// ReadFrom reads the Temperature from the writer.
+// ReadFrom reads the Temperature from the reader.
 func (v *Temperature) ReadFrom(r io.Reader) (n int64, err error) {
 	var b [2]byte
 	n, err = readFrom(r, b[:])
@@ -228,7 +228,7 @@ func (v RelativeHumidity) String() string {
 	return fmt.Sprintf("%.1f %%", v)
 }
 
-// ReadFrom reads the RelativeHumidity from the writer.
+// ReadFrom reads the RelativeHumidity from the reader.
 func (v *RelativeHumidity) ReadFrom(r io.Reader) (n int64, err error) {
 	var b [1]byte
 	n, err = readFrom(r, b[:])
@@ -258,7 +258,7 @@ func (v Accelerometer) XLPPType() Type {
 	return TypeAccelerometer
 }
 
-// ReadFrom reads the Accelerometer from the writer.
+// ReadFrom reads the Accelerometer from the reader.
 func (v *Accelerometer) ReadFrom(r io.Reader) (n int64, err error) {
 	var b [6]byte
 	n, err = readFrom(r, b[:])
@@ -294,7 +294,7 @@ func (v BarometricPressure) XLPPType() Type {
 	return TypeBarometricPressure
 }
 
-// ReadFrom reads the BarometricPressure from the writer.
+// ReadFrom reads the BarometricPressure from the reader.
 func (v *BarometricPressure) ReadFrom(r io.Reader) (n int64, err error) {
 	var b [2]byte
 	n, err = readFrom(r, b[:])
@@ -326,7 +326,7 @@ func (v Gyrometer) XLPPType() Type {
 	return TypeGyrometer
 }
 
-// ReadFrom reads the Gyrometer from the writer.
+// ReadFrom reads the Gyrometer from the reader.
 func (v *Gyrometer) ReadFrom(r io.Reader) (n int64, err error) {
 	var b [6]byte
 	n, err = readFrom(r, b[:])
@@ -386,7 +386,7 @@ func abs32(f float32) float32 {
 	return float32(math.Abs(float64(f)))
 }
 
-// ReadFrom reads the GPS from the writer.
+// ReadFrom reads the GPS from the reader.
 func (v *GPS) ReadFrom(r io.Reader) (n int64, err error) {
 	var b [9]byte
 	n, err = readFrom(r, b[:])
