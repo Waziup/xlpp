@@ -247,7 +247,7 @@ func (v Distance) String() string {
 func (v *Distance) ReadFrom(r io.Reader) (n int64, err error) {
 	var b [4]byte
 	n, err = readFrom(r, b[:])
-	d := int32(b[0])<<24 + int32(b[0])<<16 + int32(b[0])<<8 + int32(b[0])
+	d := int32(b[0])<<24 + int32(b[1])<<16 + int32(b[2])<<8 + int32(b[3])
 	*v = Distance(d) / 1000
 	return
 }
@@ -277,7 +277,7 @@ func (v Energy) String() string {
 func (v *Energy) ReadFrom(r io.Reader) (n int64, err error) {
 	var b [4]byte
 	n, err = readFrom(r, b[:])
-	d := int32(b[0])<<24 + int32(b[0])<<16 + int32(b[0])<<8 + int32(b[0])
+	d := int32(b[0])<<24 + int32(b[1])<<16 + int32(b[2])<<8 + int32(b[3])
 	*v = Energy(d) / 1000
 	return
 }
@@ -329,11 +329,15 @@ func (v UnixTime) XLPPType() Type {
 	return TypeUnixTime
 }
 
+func (v UnixTime) String() string {
+	return time.Time(v).UTC().String()
+}
+
 // ReadFrom reads the UnixTime from the reader.
 func (v *UnixTime) ReadFrom(r io.Reader) (n int64, err error) {
 	var b [4]byte
 	n, err = readFrom(r, b[:])
-	u := uint32(b[0])<<24 + uint32(b[1])<<16 + uint32(b[2])<<8 + uint32(b[0])
+	u := uint32(b[0])<<24 + uint32(b[1])<<16 + uint32(b[2])<<8 + uint32(b[3])
 	*v = UnixTime(time.Unix(int64(u), 0))
 	return
 }

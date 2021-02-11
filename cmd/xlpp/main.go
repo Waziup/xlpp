@@ -136,7 +136,7 @@ func json2xlpp(data []byte) []byte {
 		if err := json.Unmarshal(m, v); err != nil {
 			log.Fatalf("can not unmarshal %q: %v", name, err)
 		}
-		if _, err := w.Add(uint8(channel), v); err != nil {
+		if _, err := w.Add(channel, v); err != nil {
 			log.Fatalf("can not write %q: %v", name, err)
 		}
 	}

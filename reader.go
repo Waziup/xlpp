@@ -80,7 +80,20 @@ func (r *Reader) Next() (channel int, v Value, err error) {
 		}
 		return
 	}
-	v, _, err = read(r.r)
+	switch channel {
+	case ChanDelay:
+		v = new(Delay)
+		_, err = v.ReadFrom(r.r)
+	case ChanActuators:
+		v = new(Actuators)
+		_, err = v.ReadFrom(r.r)
+	case ChanActuatorsWithChannel:
+		v = new(ActuatorsWithChannel)
+		_, err = v.ReadFrom(r.r)
+	default:
+		v, _, err = read(r.r)
+	}
+
 	return
 }
 

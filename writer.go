@@ -20,7 +20,16 @@ func NewWriter(w io.Writer) *Writer {
 }
 
 // Add writes a new Value to the Writer.
-func (w *Writer) Add(channel uint8, v Value) (n int, err error) {
+func (w *Writer) Add(channel int, v Value) (n int, err error) {
+	if marker, ok := v.(Marker); ok {
+		n, err = w.Write([]byte{byte(marker.XLPPChannel())})
+		if err == nil {
+			var m int64
+			m, err = marker.WriteTo(w.Writer)
+			n += int(m)
+		}
+		return
+	}
 	n, err = w.Write([]byte{byte(channel)})
 	if err == nil {
 		var m int

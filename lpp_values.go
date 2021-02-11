@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io"
 	"math"
+	"strconv"
 )
 
 // The following types are supported by this library:
@@ -32,6 +33,10 @@ func (v DigitalInput) XLPPType() Type {
 	return TypeDigitalInput
 }
 
+func (v DigitalInput) String() string {
+	return strconv.Itoa(int(v))
+}
+
 // ReadFrom reads the DigitalInput from the reader.
 func (v *DigitalInput) ReadFrom(r io.Reader) (n int64, err error) {
 	var b [1]byte
@@ -54,6 +59,10 @@ type DigitalOutput uint8
 // XLPPType for DigitalOutput returns TypeDigitalOutput.
 func (v DigitalOutput) XLPPType() Type {
 	return TypeDigitalOutput
+}
+
+func (v DigitalOutput) String() string {
+	return strconv.Itoa(int(v))
 }
 
 // ReadFrom reads the DigitalOutput from the reader.
@@ -166,6 +175,13 @@ type Presence uint8
 // XLPPType for Presence returns TypePresence.
 func (v Presence) XLPPType() Type {
 	return TypePresence
+}
+
+func (v Presence) String() string {
+	if v == 0 {
+		return "no"
+	}
+	return "yes"
 }
 
 // ReadFrom reads the Presence from the reader.

@@ -5,6 +5,7 @@ import (
 	"log"
 	"reflect"
 	"testing"
+	"time"
 
 	"github.com/waziup/xlpp"
 )
@@ -38,6 +39,35 @@ var array = xlpp.Array{
 	&temperature,
 }
 
+var exampleTime, _ = time.Parse("Mon Jan 2 15:04:05 -0700 MST 2006", "Mon Jan 2 15:04:05 -0700 MST 2006")
+
+var voltage = xlpp.Voltage(1.45)
+var current = xlpp.Current(4.41)
+var frequency = xlpp.Frequency(8100)
+var percentage = xlpp.Percentage(17)
+var altitude = xlpp.Altitude(8849)
+var concentration = xlpp.Concentration(2512)
+var power = xlpp.Power(1142)
+var distance = xlpp.Distance(2.411)
+var energy = xlpp.Energy(2.876)
+var direcion = xlpp.Direction(90)
+var unixtime = xlpp.UnixTime(exampleTime.Round(0))
+var color = xlpp.Colour{R: 123, G: 54, B: 89}
+var swithc = xlpp.Switch(true)
+
+var delay = xlpp.Delay(time.Second * 4235)
+var actuators = xlpp.Actuators{xlpp.TypeColour, xlpp.TypeAnalogOutput, xlpp.TypeSwitch}
+var actuatorsWithChannel = xlpp.ActuatorsWithChannel{
+	xlpp.Actuator{
+		Channel: 3,
+		Type:    xlpp.TypeVoltage,
+	},
+	xlpp.Actuator{
+		Channel: 17,
+		Type:    xlpp.TypeColour,
+	},
+}
+
 var values = []xlpp.Value{
 	// LPP types
 	&digitalInput,
@@ -52,6 +82,20 @@ var values = []xlpp.Value{
 	&barometricPressure,
 	&gyromter,
 	&gps,
+	// more LPP types
+	&voltage,
+	&current,
+	&frequency,
+	&percentage,
+	&altitude,
+	&concentration,
+	&power,
+	&distance,
+	&energy,
+	&direcion,
+	&unixtime,
+	&color,
+	&swithc,
 	// XLPP types
 	&null,
 	&bin,
@@ -60,6 +104,10 @@ var values = []xlpp.Value{
 	&boolean,
 	&object,
 	&array,
+	// special XLPP types
+	&delay,
+	&actuators,
+	&actuatorsWithChannel,
 }
 
 func TestSimple(t *testing.T) {
@@ -68,8 +116,7 @@ func TestSimple(t *testing.T) {
 	w := xlpp.NewWriter(&buf)
 
 	for i, value := range values {
-		var channel = uint8(i)
-		w.Add(channel, value)
+		w.Add(i, value)
 	}
 
 	log.Printf("buffer size: %d", buf.Len())
@@ -94,12 +141,16 @@ func TestWriter(t *testing.T) {
 	r := xlpp.NewReader(&buf)
 
 	for i, vIn := range values {
-		_, err := w.Add(uint8(i), vIn)
+		chanIn := i
+		if marker, ok := vIn.(xlpp.Marker); ok {
+			chanIn = marker.XLPPChannel()
+		}
+		_, err := w.Add(chanIn, vIn)
 		if err != nil {
 			t.Fatalf("can not write %T (%+v): %v", deref(vIn), deref(vIn), err)
 		}
 		data := buf.Bytes()
-		channel, vOut, err := r.Next()
+		chanOut, vOut, err := r.Next()
 		if err != nil {
 			t.Logf("data: %v", data)
 			t.Fatalf("can not read %T (%+v): %v", deref(vIn), deref(vIn), err)
@@ -108,13 +159,21 @@ func TestWriter(t *testing.T) {
 			t.Logf("data: %v", data)
 			t.Fatalf("write <> read: %T <> %T", deref(vIn), deref(vOut))
 		}
-		if !reflect.DeepEqual(vIn, vOut) {
-			t.Logf("data: %v", data)
-			t.Fatalf("write <> read: %T (%+v) <> (%+v)", deref(vIn), deref(vIn), deref(vOut))
+		if tIn, ok := vIn.(*xlpp.UnixTime); ok {
+			tOut := vOut.(*xlpp.UnixTime)
+			if !time.Time(*tIn).Equal(time.Time(*tOut)) {
+				t.Logf("data: %v", data)
+				t.Fatalf("write <> read: %T (%+v) <> (%+v)", deref(vIn), deref(vIn), deref(vOut))
+			}
+		} else {
+			if !reflect.DeepEqual(vIn, vOut) {
+				t.Logf("data: %v", data)
+				t.Fatalf("write <> read: %T (%+v) <> (%+v)", deref(vIn), deref(vIn), deref(vOut))
+			}
 		}
-		if channel != i {
+		if chanIn != chanOut {
 			t.Logf("data: %v", data)
-			t.Fatalf("write chan <> read chan: %T %d <> %d", deref(vIn), deref(vIn), deref(vOut))
+			t.Fatalf("write chan <> read chan: %T %d <> %d", deref(vIn), chanIn, chanOut)
 		}
 		if buf.Len() != 0 {
 			t.Logf("data: %v", data)
