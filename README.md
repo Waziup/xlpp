@@ -133,6 +133,67 @@ Bool | 54 (true), 55 (false) | 0 | true of false
 Null | 58 | 0 | (no value)
 Binary | 57 | len+1 | raw binary data
 
+# XLPP Marker Types
+
+Markers break the normal flow of types to add more information to the stream. Markers are no sensor values and do not follow the [channel, type, data] structure!
+They are identified by a reserved (fixed) channel byte, followed by theire respective content.
+
+## Delay Marker
+
+A Delay Marker is used to put values in a historical context. It uses the reserved channel 253 always.
+
+Marker (Channel) | Data Size | Usage
+-- | -- | --
+253 | 3 | Time duration that puts all following values in a historical context.
+
+```
+ XLPP Message
+------------------------------------------------------------------
+ | Channel 1 |     | Channel 2 | Channel 253  | Channel 1 |     |
+ | Sensor  1 | ... | Sensor  2 | Delay Marker | Sensor 1  | ... |
+ | Value   1 |     | Value   2 | e.g. 1h30m   | Value 1   |     |
+----------------------------------------------------------------- -
+```
+
+In the above example, a Delay Marker with `1h30m` (1 hour, 30 minutes) was added to the data, meaning that all subsequent values have been measured at this time in the past. Sensor 1 and Channel 1 can be used twice in the message, as the second occurrence reflects a measurement from the past.
+
+A message can container multiple Delay Markers. The delays will be accumulated to a total delay. 
+
+## Actuator Marker
+
+An Actuator Marker is used to declare the existance of actuators to the receiver. This holds no value or state for the actuator, but the XLPP Type that this actuator consumes.
+
+The Marker uses the reserved channels 252 (Actuators with Channel) and 251 (Actuators without channel).
+
+Marker (Channel) | Data Size | Usage
+-- | -- | --
+252 | 1 + 1 x num actuators | A list of actuators (Type) that the sender of this message can consume.
+251 | 1 + 2 x num actuator | A list of actuators (Channel+Type) that the sender of this message can consume.
+
+
+
+# Binary format
+
+```
+XLPP =
+	Field
+	Field, Field
+Field = 
+	Value
+	Marker
+Value =
+	Channel, Type, Data
+	# using ony free channels
+Data =
+	# depends on Type and Channel
+Channel =
+	0   .. 249 # free channels
+	250 .. 255 # reserved channels
+Marker =
+	Channel, Data 
+```
+
+
 # XLPP Binary
 
 Install the xlpp binary from source using the [go programming language](https://golang.org/dl/) or [download a prebuild binary file](https://github.com/Waziup/xlpp/tree/main/bin).
