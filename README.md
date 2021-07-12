@@ -1,7 +1,6 @@
 # xlpp
 Waziup Extended Low Power Payload (XLPP)
 
-[![Documentation](https://godoc.org/github.com/Waziup/xlpp?status.svg)](http://godoc.org/github.com/Waziup/xlpp)
 
 ## Example
 
