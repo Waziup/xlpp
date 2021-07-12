@@ -105,6 +105,8 @@ Barometer | 3315 | 115 | 73 | 2 | 0.1 hPa Unsigned MSB
 Gyrometer | 3334 | 134 | 86 | 6 | 0.01 °/s Signed MSB per axis
 GPS Location | 3336 | 136 | 88 | 9 | Latitude : 0.0001 ° Signed MSB Longitude : 0.0001 ° Signed MSB Altitude : 0.01 meter Signed MSB
 
+# XLPP
+Dimensional types
 Type | LPP | Data Size | Data Resolution per bit
 -- | -- | -- | --
 Voltage | 116 | 2 | 0.01V Unsigned
@@ -121,8 +123,7 @@ UnixTime | 133 | 4 | Unsigned
 Colour | 135 | 1 | RGB Color
 Switch | 142 | 1 | 0/1 (OFF/ON)
 
-# XLPP
-
+Non-Dimensional types
 Type | XLPP | Data Size | Data Resolution per bit
 -- | -- | -- | --
 Integer | 51 | variant | 1
