@@ -1,6 +1,8 @@
-# xlpp
-Waziup Extended Low Power Payload (XLPP)
+# Extended Low Power Payload (XLPP)
 
+This go library allows you to encode and decode light-weight payloads.
+It is an extended version of [Cayenne Low Power Payload](https://www.thethingsnetwork.org/docs/devices/arduino/api/cayennelpp.html).
+It can be used in Chirpstack LoRaWAN servers.
 
 ## Example
 
