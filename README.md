@@ -89,6 +89,7 @@ func main() {
 
 
 # LPP Types
+Those types are inherited from Cayenne LPP (https://developers.mydevices.com/cayenne/docs/lora/#lora-cayenne-low-power-payload)
 
 Type | IPSO | LPP | Hex | Data Size | Data Resolution per bit
 -- | -- | -- | -- | -- | --
@@ -106,7 +107,8 @@ Gyrometer | 3334 | 134 | 86 | 6 | 0.01 °/s Signed MSB per axis
 GPS Location | 3336 | 136 | 88 | 9 | Latitude : 0.0001 ° Signed MSB Longitude : 0.0001 ° Signed MSB Altitude : 0.01 meter Signed MSB
 
 # XLPP
-Dimensional types
+Additionnal types with physical dimension:
+
 Type | LPP | Data Size | Data Resolution per bit
 -- | -- | -- | --
 Voltage | 116 | 2 | 0.01V Unsigned
@@ -123,7 +125,8 @@ UnixTime | 133 | 4 | Unsigned
 Colour | 135 | 1 | RGB Color
 Switch | 142 | 1 | 0/1 (OFF/ON)
 
-Non-Dimensional types
+Additionnal types without physical dimension:
+
 Type | XLPP | Data Size | Data Resolution per bit
 -- | -- | -- | --
 Integer | 51 | variant | 1
