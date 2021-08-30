@@ -22,6 +22,7 @@ const (
 	TypeUnixTime      Type = 133 // 4 bytes, unsigned
 	TypeColour        Type = 135 // 1 byte per RGB Color
 	TypeSwitch        Type = 142 // 1 byte, 0/1
+	TypeMosquito      Type = 149 // 1 byte, unique integer for each mosquito specie
 )
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -428,5 +429,33 @@ func (v Switch) WriteTo(w io.Writer) (n int64, err error) {
 	} else {
 		m, err = w.Write([]byte{byte(0)})
 	}
+	return int64(m), err
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+// Mosquito is a one byte integer value (unsigned).
+type Mosquito int8
+
+// XLPPType for Mosquito returns TypeMosquito.
+func (v Mosquito) XLPPType() Type {
+	return TypeMosquito
+}
+
+func (v Mosquito) String() string {
+	return fmt.Sprintf("%d", v)
+}
+
+// ReadFrom reads the Mosquito from the reader.
+func (v *Mosquito) ReadFrom(r io.Reader) (n int64, err error) {
+	var b [1]byte
+	n, err = readFrom(r, b[:])
+	*v = Mosquito(b[0])
+	return
+}
+
+// WriteTo writes the Mosquito to the writer.
+func (v Mosquito) WriteTo(w io.Writer) (n int64, err error) {
+	m, err := w.Write([]byte{byte(v)})
 	return int64(m), err
 }
