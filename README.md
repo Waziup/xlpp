@@ -1,13 +1,17 @@
 # Extended Low Power Payload (XLPP)
 
 This go library allows you to encode and decode light-weight payloads.
-It is an extended version of [Cayenne Low Power Payload](https://www.thethingsnetwork.org/docs/devices/arduino/api/cayennelpp.html).
-It can be used in Chirpstack LoRaWAN servers.
+It is an extended version of [Cayenne Low Power Payload](https://www.thethingsnetwork.org/docs/devices/arduino/api/cayennelpp.html) for use with LoRa communication where you focus on having short payloads because of the restrictions on power-usage and the regulated duty cycle / time-on-air when sending / receiving data.
+You will find this payload encoder / decoder as a Codec in the [Wazigate Edge Gateway](https://github.com/Waziup/wazigate-edge/tree/v2/edge/codecs).
 
-## Example
+![XLPP Overview](./docs/overview.svg)
+
+XLPP comes with a Golang encoder / decoder (this repository) written in the Go programming language and an Arduino C-library (see the [waziup/arduino-xlpp](https://github.com/Waziup/arduino-xlpp) repository).
+
+
+## Golang Example
 
 ```go
-
 package main
 
 import (
