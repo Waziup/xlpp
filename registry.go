@@ -40,6 +40,7 @@ var Registry = map[Type]func() Value{
 		return b
 	},
 	TypeBoolFalse:  func() Value { return new(Bool) },
+	TypeBool:       func() Value { return new(Bool) },
 	TypeObject:     func() Value { return new(Object) },
 	TypeArray:      func() Value { return new(Array) },
 	TypeEndOfArray: func() Value { return endOfArray{} },
