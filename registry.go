@@ -29,6 +29,7 @@ var Registry = map[Type]func() Value{
 	TypeUnixTime:      func() Value { return new(UnixTime) },
 	TypeColour:        func() Value { return new(Colour) },
 	TypeSwitch:        func() Value { return new(Switch) },
+	TypeMosquito:      func() Value { return new(Mosquito) },
 
 	// XLPP Types
 	TypeInteger: func() Value { return new(Integer) },

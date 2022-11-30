@@ -54,6 +54,7 @@ var direcion = xlpp.Direction(90)
 var unixtime = xlpp.UnixTime(exampleTime.Round(0))
 var color = xlpp.Colour{R: 123, G: 54, B: 89}
 var swithc = xlpp.Switch(true)
+var mosquito = xlpp.Mosquito(1)
 
 var delay = xlpp.Delay(time.Second * 4235)
 var actuators = xlpp.Actuators{xlpp.TypeColour, xlpp.TypeAnalogOutput, xlpp.TypeSwitch}
@@ -96,6 +97,7 @@ var values = []xlpp.Value{
 	&unixtime,
 	&color,
 	&swithc,
+	&mosquito,
 	// XLPP types
 	&null,
 	&bin,
