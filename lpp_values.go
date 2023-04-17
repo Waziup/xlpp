@@ -82,7 +82,7 @@ func (v DigitalOutput) WriteTo(w io.Writer) (n int64, err error) {
 ////////////////////////////////////////////////////////////////////////////////
 
 // AnalogInput is a floating point number with 0.01 data resolution (signed).
-type AnalogInput float32
+type AnalogInput float64
 
 // XLPPType for AnalogInput returns TypeAnalogInput.
 func (v AnalogInput) XLPPType() Type {
@@ -112,7 +112,7 @@ func (v AnalogInput) WriteTo(w io.Writer) (n int64, err error) {
 ////////////////////////////////////////////////////////////////////////////////
 
 // AnalogOutput is a floating point number with 0.01 data resolution (signed).
-type AnalogOutput float32
+type AnalogOutput float64
 
 // XLPPType for AnalogOutput returns TypeAnalogOutput.
 func (v AnalogOutput) XLPPType() Type {
@@ -202,7 +202,7 @@ func (v Presence) WriteTo(w io.Writer) (n int64, err error) {
 
 // Temperature is a floating point number temperature [°C] with 0.1 data resolution (signed).
 // E.g. a value of 27.3456°C is written as 27.3.
-type Temperature float32
+type Temperature float64
 
 // XLPPType for Temperature returns TypeTemperature.
 func (v Temperature) XLPPType() Type {
@@ -233,7 +233,7 @@ func (v Temperature) WriteTo(w io.Writer) (n int64, err error) {
 
 // RelativeHumidity is a floating point number humidity [%] with 0.5 data resolution (unsigned).
 // E.g. a value of 12.64% is written as 12.5, or 51.434% is written as 51.0.
-type RelativeHumidity float32
+type RelativeHumidity float64
 
 // XLPPType for RelativeHumidity returns TypeRelativeHumidity.
 func (v RelativeHumidity) XLPPType() Type {
@@ -262,7 +262,7 @@ func (v RelativeHumidity) WriteTo(w io.Writer) (n int64, err error) {
 
 // Accelerometer is a struct of {x, y, z} floating point numbers [G] with 0.001 data resolution (signed) per axis.
 type Accelerometer struct {
-	X, Y, Z float32
+	X, Y, Z float64
 }
 
 func (v Accelerometer) String() string {
@@ -281,9 +281,9 @@ func (v *Accelerometer) ReadFrom(r io.Reader) (n int64, err error) {
 	vx := int16(b[0])<<8 + int16(b[1])
 	vy := int16(b[2])<<8 + int16(b[3])
 	vz := int16(b[4])<<8 + int16(b[5])
-	v.X = float32(vx) / 1000
-	v.Y = float32(vy) / 1000
-	v.Z = float32(vz) / 1000
+	v.X = float64(vx) / 1000
+	v.Y = float64(vy) / 1000
+	v.Z = float64(vz) / 1000
 	return
 }
 
@@ -299,7 +299,7 @@ func (v Accelerometer) WriteTo(w io.Writer) (n int64, err error) {
 ////////////////////////////////////////////////////////////////////////////////
 
 // BarometricPressure is a floating point number barometric pressure value [hPa] with 0.1 data resolution (unsigned).
-type BarometricPressure float32
+type BarometricPressure float64
 
 func (v BarometricPressure) String() string {
 	return fmt.Sprintf("%.1f hPa", v)
@@ -334,7 +334,7 @@ type Gyrometer struct {
 }
 
 func (v Gyrometer) String() string {
-	return fmt.Sprintf("X: %.3f °/s, Y: %.3f °/s, Z: %.3f °/s", v.X, v.Y, v.Z)
+	return fmt.Sprintf("X: %.2f °/s, Y: %.2f °/s, Z: %.2f °/s", v.X, v.Y, v.Z)
 }
 
 // XLPPType for Gyrometer returns TypeGyrometer.
@@ -368,7 +368,7 @@ func (v Gyrometer) WriteTo(w io.Writer) (n int64, err error) {
 
 // GPS is a {latitude [°], longitude [°], altitude [m]} GPS location with 0.0001 data resolution (signed) for latitude and longitude, and 0.01 data resolution (signed) for altitude.
 type GPS struct {
-	Latitude, Longitude, Meters float32
+	Latitude, Longitude, Meters float64
 }
 
 // XLPPType for GPS returns TypeGPS.
@@ -381,7 +381,7 @@ func (v GPS) String() string {
 	return fmt.Sprintf("%s, %s, %.2fm", dms(v.Latitude, "N", "S"), dms(v.Longitude, "E", "W"), v.Meters)
 }
 
-func dms(f float32, n string, s string) string {
+func dms(f float64, n string, s string) string {
 	abs := abs32(f)
 	deg := floor32(abs)
 	_min := (abs - deg) * 60
@@ -394,12 +394,12 @@ func dms(f float32, n string, s string) string {
 	return fmt.Sprintf("%.0f°%.0f'%.2f\"%s", deg, min, sec, dir)
 }
 
-func floor32(f float32) float32 {
-	return float32(math.Floor(float64(f)))
+func floor32(f float64) float64 {
+	return float64(math.Floor(float64(f)))
 }
 
-func abs32(f float32) float32 {
-	return float32(math.Abs(float64(f)))
+func abs32(f float64) float64 {
+	return float64(math.Abs(float64(f)))
 }
 
 // ReadFrom reads the GPS from the reader.
@@ -409,9 +409,9 @@ func (v *GPS) ReadFrom(r io.Reader) (n int64, err error) {
 	lat := int32(b[0])<<16 + int32(b[1])<<8 + int32(b[2])
 	lon := int32(b[3])<<16 + int32(b[4])<<8 + int32(b[5])
 	alt := int32(b[6])<<16 + int32(b[7])<<8 + int32(b[8])
-	v.Latitude = float32(lat) / 10000
-	v.Longitude = float32(lon) / 10000
-	v.Meters = float32(alt) / 100
+	v.Latitude = float64(lat) / 10000
+	v.Longitude = float64(lon) / 10000
+	v.Meters = float64(alt) / 100
 	return
 }
 

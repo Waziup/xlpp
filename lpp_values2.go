@@ -28,7 +28,7 @@ const (
 
 // Voltage is a floating point number electrical voltage [V] with 0.01V data resolution (unsigned).
 // E.g. a value of 2.3456V is written as 2.34.
-type Voltage float32
+type Voltage float64
 
 // XLPPType for Voltage returns TypeVoltage.
 func (v Voltage) XLPPType() Type {
@@ -59,7 +59,7 @@ func (v Voltage) WriteTo(w io.Writer) (n int64, err error) {
 
 // Current is a floating point number electrical Current [A] with 0.001A data resolution (unsigned).
 // E.g. a value of 2.3456A is written as 2.345.
-type Current float32
+type Current float64
 
 // XLPPType for Current returns TypeCurrent.
 func (v Current) XLPPType() Type {
@@ -146,7 +146,7 @@ func (v Percentage) WriteTo(w io.Writer) (n int64, err error) {
 
 // Altitude is a floating point with 1 m data resolution (unsigned).
 // E.g. a value of 3145.82m is written as 3145.
-type Altitude float32
+type Altitude float64
 
 // XLPPType for Altitude returns TypeAltitude.
 func (v Altitude) XLPPType() Type {
@@ -232,7 +232,7 @@ func (v Power) WriteTo(w io.Writer) (n int64, err error) {
 ////////////////////////////////////////////////////////////////////////////////
 
 // Distance is a 4-byte floating point number [m] with 0.001 data resolution (unsigned).
-type Distance float32
+type Distance float64
 
 // XLPPType for Distance returns TypeDistance.
 func (v Distance) XLPPType() Type {
@@ -262,7 +262,7 @@ func (v Distance) WriteTo(w io.Writer) (n int64, err error) {
 ////////////////////////////////////////////////////////////////////////////////
 
 // Energy is a 4-byte floating point number [kWh] with 0.001 data resolution (unsigned).
-type Energy float32
+type Energy float64
 
 // XLPPType for Energy returns TypeEnergy.
 func (v Energy) XLPPType() Type {
@@ -292,7 +292,7 @@ func (v Energy) WriteTo(w io.Writer) (n int64, err error) {
 ////////////////////////////////////////////////////////////////////////////////
 
 // Direction is a floating point with 1 deg data resolution (unsigned).
-type Direction float32
+type Direction float64
 
 // XLPPType for Direction returns TypeDirection.
 func (v Direction) XLPPType() Type {

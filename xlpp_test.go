@@ -20,7 +20,7 @@ var temperature = xlpp.Temperature(31.6)
 var relativeHumidity = xlpp.RelativeHumidity(22.5)
 var accelerometer = xlpp.Accelerometer{X: 3.245, Y: -0.171, Z: 0.909}
 var barometricPressure = xlpp.BarometricPressure(4.1)
-var gyromter = xlpp.Gyrometer{X: 4.25, Y: 5.1, Z: 0.2}
+var gyromter = xlpp.Gyrometer{X: 4.25, Y: 5.10, Z: 0.21}
 var gps = xlpp.GPS{Latitude: 51.0493, Longitude: 13.7381, Meters: 122}
 
 var null = xlpp.Null{}
